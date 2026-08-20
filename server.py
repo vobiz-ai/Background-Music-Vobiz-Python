@@ -31,6 +31,7 @@ YOUR APP / CONTROL API:
 import logging
 import os
 import threading
+from pathlib import Path
 
 import requests
 import uvicorn
@@ -43,7 +44,9 @@ from pyngrok import conf, ngrok
 # Config
 # ---------------------------------------------------------------------------
 
-load_dotenv(dotenv_path="../../.env")
+# Resolve .env next to this file, so `cp .env.example .env` in the repository
+# root takes effect no matter which directory the server is started from.
+load_dotenv(dotenv_path=Path(__file__).resolve().parent / ".env")
 
 HTTP_PORT = int(os.getenv("HTTP_PORT", "8000"))
 NGROK_AUTH_TOKEN = os.getenv("NGROK_AUTH_TOKEN", "")
